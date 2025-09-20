@@ -4,3 +4,5 @@
 
 比如：輸入字串 "world", 則請輸出 "hello, world"
 '''
+a = input()
+print("hello,", a )
