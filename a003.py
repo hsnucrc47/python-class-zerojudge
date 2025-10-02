@@ -9,7 +9,7 @@ S=(M*2+D)%3
 
 得到 S 的值，再依照 S 的值從 0 到 2 分別給與 普通、吉、大吉 等三種不同的運勢
 '''
-M, D = map(int, input().split())
+M, D = map(int, input().split()) #輸入多個變數
 S = (M*2+D)%3
 if S == 0:
     print("普通")
