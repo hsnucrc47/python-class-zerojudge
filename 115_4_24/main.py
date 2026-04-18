@@ -22,7 +22,7 @@ class Sprite:
 class Player(Sprite):
     def __init__(self):
         self.image = pygame.image.load("image/player.png")
-        self.size = 50
+        self.size = 50 # 新增尺寸
         self.image = pygame.transform.scale(self.image, (self.size, self.size))
         self.x = 100
         self.y = 100
@@ -45,6 +45,8 @@ class Player(Sprite):
 
     def update(self, keys, events):
         self.handle_input(keys, events)
+
+        # 處理跑出螢幕問題
         if self.y > HEIGHT - self.size:
             self.y = HEIGHT - self.size
         if self.x > WIDTH - self.size:
