@@ -4,7 +4,7 @@ pygame.init()
 
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("正統 pygame-ce Sprite 架構")
+pygame.display.set_caption("pygame-ce Sprite 架構")
 
 clock = pygame.time.Clock()
 FPS = 60
