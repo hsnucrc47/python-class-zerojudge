@@ -34,6 +34,13 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 #######
+all_sprites = pygame.sprite.Group()
+enemies = pygame.sprite.Group()
+bullets = pygame.sprite.Group()
+
+
+
+
 
 # ===== 玩家 =====
 class Player(pygame.sprite.Sprite):

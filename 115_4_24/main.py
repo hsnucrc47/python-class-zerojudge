@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.size = 50
         self.image = pygame.transform.scale(self.image, (self.size, self.size))
         
-        # 2. 正統做法：使用 rect 管理位置
+        # 2. 使用 rect 管理位置
         self.rect = self.image.get_rect()
         self.rect.topleft = (100, 100)
         self.speed = 5
