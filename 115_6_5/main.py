@@ -30,8 +30,9 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
 
-        self.image = pygame.Surface((10, 20))
-        self.image.fill((255, 255, 0))
+        self.image = pygame.image.load("image/bullet.png")
+        self.size = 10
+        self.image = pygame.transform.scale(self.image, (self.size, self.size))
 
         self.rect = self.image.get_rect(center=(x, y))
 
@@ -102,13 +103,13 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_DOWN]:
             self.rect.y += self.speed
 
+        # 讓玩家不會移出畫面
         self.rect.clamp_ip(screen.get_rect())
 
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
         self.image = pygame.image.load(
             "image/enemy.png"
         ).convert_alpha()
@@ -140,9 +141,11 @@ effects = pygame.sprite.Group()
 player = Player()
 all_sprites.add(player)
 
+enemy_death_time = 0
 enemy_spawn_timer = 0
 running = True
 game_over = False
+win = False
 
 while running:
 
@@ -153,7 +156,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        if not game_over:
+        if not game_over and not win:
             if event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_SPACE:
@@ -168,10 +171,9 @@ while running:
 
                     shoot_sound.play()
 
-    if not game_over:
+    if not game_over and not win :
 
         enemy_spawn_timer += 1
-
         if enemy_spawn_timer > 40:
 
             enemy_spawn_timer = 0
@@ -199,7 +201,7 @@ while running:
                 explosion = Explosion(
                     enemy.rect.center
                 )
-
+                enemy_death_time += 1
                 all_sprites.add(explosion)
                 effects.add(explosion)
 
@@ -214,6 +216,8 @@ while running:
         if player.hp <= 0:
             game_over = True
 
+        if enemy_death_time > 20:
+            win = True
     screen.fill((20, 20, 20))
 
     all_sprites.draw(screen)
@@ -225,6 +229,14 @@ while running:
     )
 
     screen.blit(hp_text, (10, 10))
+
+    enemy_death_text = font.render(
+        f"擊殺數: {enemy_death_time}",
+        True,
+        (255,255,255)
+    )
+
+    screen.blit(enemy_death_text, (WIDTH - 200, 10))
 
     if game_over:
 
@@ -239,6 +251,21 @@ while running:
             (
                 WIDTH//2 - game_over_text.get_width()//2,
                 HEIGHT//2 - game_over_text.get_height()//2
+            )
+        )
+    elif win:
+
+        win_text = big_font.render(
+            "你贏了！",
+            True,
+            (255, 0, 0)
+        )
+
+        screen.blit(
+            win_text,
+            (
+                WIDTH//2 - win_text.get_width()//2,
+                HEIGHT//2 - win_text.get_height()//2
             )
         )
 
